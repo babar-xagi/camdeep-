@@ -12,23 +12,44 @@
     {% if schools %}
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {% for school in schools %}
-        <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition p-6">
-            <h3 class="text-xl font-bold mb-2">{{ school.name }}</h3>
-            <p class="text-sm text-gray-500 mb-3">{{ school.city }}, {{ school.state }}</p>
+        <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition p-6 border-t-4 border-accent-gold">
+            <div class="flex justify-between items-start mb-3">
+                <div>
+                    <h3 class="text-xl font-bold">{{ school.name }}</h3>
+                    <p class="text-sm text-gray-500">{{ school.city }}, {{ school.state_province }}</p>
+                </div>
+                <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">✓ MOU Signed</span>
+            </div>
+
             <p class="text-gray-600 mb-4 text-sm">{{ school.description|truncatewords:20 }}</p>
-            <div class="mb-4">
+
+            <div class="bg-gray-50 rounded p-3 mb-4 space-y-2">
                 <p class="text-sm"><strong>Principal:</strong> {{ school.principal_name }}</p>
                 <p class="text-sm"><strong>Students:</strong> {{ school.total_students }}</p>
+                {% if school.established_year %}
+                <p class="text-sm"><strong>Established:</strong> {{ school.established_year }}</p>
+                {% endif %}
             </div>
-            <a href="{% url 'schools:detail' school.slug %}" class="inline-block px-4 py-2 bg-primary text-white rounded hover:bg-blue-600 transition">
-                Learn More
-            </a>
+
+            <div class="flex space-x-2">
+                <a href="{% url 'schools:detail' school.slug %}" class="flex-1 px-4 py-2 bg-primary text-white rounded hover:bg-blue-600 transition text-center text-sm">
+                    View Details
+                </a>
+                {% if school.website %}
+                <a href="{{ school.website }}" target="_blank" class="px-4 py-2 border border-primary text-primary rounded hover:bg-blue-50 transition text-sm">
+                    Visit Website
+                </a>
+                {% endif %}
+            </div>
         </div>
         {% endfor %}
     </div>
     {% else %}
-    <div class="text-center py-12">
-        <p class="text-gray-600 text-lg">No schools available at this time.</p>
+    <div class="text-center py-16">
+        <div class="bg-blue-50 rounded-lg p-8 max-w-md mx-auto">
+            <p class="text-gray-600 text-lg mb-4">No partner schools yet.</p>
+            <p class="text-gray-500 text-sm">Partner schools will appear here once they have an active partnership agreement with signed MOU.</p>
+        </div>
     </div>
     {% endif %}
 </div>

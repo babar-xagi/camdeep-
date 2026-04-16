@@ -5,12 +5,18 @@ from .models import School
 # Create your views here.
 
 class SchoolListView(ListView):
-    """Display all partner schools"""
+    """Display all active partner schools with signed MOU"""
     model = School
     template_name = 'schools/school_list.html'
     context_object_name = 'schools'
-    queryset = School.objects.filter(status='active').order_by('name')
     paginate_by = 12
+
+    def get_queryset(self):
+        # Only show schools that are active AND have signed MOU
+        return School.objects.filter(
+            status='active',
+            mou_signed=True
+        ).order_by('name')
 
 
 class SchoolDetailView(DetailView):
@@ -19,6 +25,13 @@ class SchoolDetailView(DetailView):
     template_name = 'schools/school_detail.html'
     context_object_name = 'school'
     slug_field = 'slug'
+
+    def get_queryset(self):
+        # Only show active schools with signed MOU
+        return School.objects.filter(
+            status='active',
+            mou_signed=True
+        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
