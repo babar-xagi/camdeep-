@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}My Profile - CAMDEEP{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <h1 class="text-4xl font-bold mb-8">My Profile</h1>
+
+    <div class="bg-white rounded-lg shadow-md p-8">
+        <div class="mb-6">
+            <h2 class="text-2xl font-bold mb-4">Account Information</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="text-sm font-medium text-gray-500">Username</label>
+                    <p class="text-lg">{{ user.username }}</p>
+                </div>
+                <div>
+                    <label class="text-sm font-medium text-gray-500">Email</label>
+                    <p class="text-lg">{{ user.email }}</p>
+                </div>
+                <div>
+                    <label class="text-sm font-medium text-gray-500">Full Name</label>
+                    <p class="text-lg">{{ user.get_full_name|default:"Not set" }}</p>
+                </div>
+                {% if user.phone_number %}
+                <div>
+                    <label class="text-sm font-medium text-gray-500">Phone</label>
+                    <p class="text-lg">{{ user.phone_number }}</p>
+                </div>
+                {% endif %}
+                {% if user.role %}
+                <div>
+                    <label class="text-sm font-medium text-gray-500">Role</label>
+                    <p class="text-lg">{{ user.get_role_display }}</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <hr class="my-8">
+
+        <div class="flex space-x-4">
+            <a href="{% url 'accounts:logout' %}" class="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
+                Logout
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

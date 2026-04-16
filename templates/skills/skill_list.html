@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Skills - CAMDEEP{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <h1 class="text-4xl font-bold mb-12 text-center">7 Core Skills</h1>
+
+    {% if skills %}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {% for skill in skills %}
+        <a href="{% url 'skills:detail' skill.slug %}" class="bg-white rounded-lg shadow-md hover:shadow-lg transition p-6">
+            <div class="text-4xl mb-4">{{ skill.icon }}</div>
+            <h3 class="text-xl font-bold mb-2 text-primary">{{ skill.get_name_display }}</h3>
+            <p class="text-gray-600 text-sm">{{ skill.short_description }}</p>
+            <div class="mt-4 text-blue-500 font-semibold text-sm">View Details →</div>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-12">
+        <p class="text-gray-600 text-lg">No skills available at this time.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+

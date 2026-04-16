@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Partner Schools - CAMDEEP{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <h1 class="text-4xl font-bold mb-4 text-center">Partner Schools</h1>
+    <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+        Join our network of schools transforming education through CAMDEEP programs.
+    </p>
+
+    {% if schools %}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for school in schools %}
+        <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition p-6">
+            <h3 class="text-xl font-bold mb-2">{{ school.name }}</h3>
+            <p class="text-sm text-gray-500 mb-3">{{ school.city }}, {{ school.state }}</p>
+            <p class="text-gray-600 mb-4 text-sm">{{ school.description|truncatewords:20 }}</p>
+            <div class="mb-4">
+                <p class="text-sm"><strong>Principal:</strong> {{ school.principal_name }}</p>
+                <p class="text-sm"><strong>Students:</strong> {{ school.total_students }}</p>
+            </div>
+            <a href="{% url 'schools:detail' school.slug %}" class="inline-block px-4 py-2 bg-primary text-white rounded hover:bg-blue-600 transition">
+                Learn More
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-12">
+        <p class="text-gray-600 text-lg">No schools available at this time.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
