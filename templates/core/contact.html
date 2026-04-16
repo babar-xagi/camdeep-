@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Us - CAMDEEP{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <h1 class="text-4xl font-bold mb-8 text-center">Get in Touch</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+        <div>
+            <h2 class="text-2xl font-bold mb-6">Contact Information</h2>
+            <div class="space-y-6">
+                <div>
+                    <h3 class="font-bold text-lg mb-2">Email</h3>
+                    <p class="text-gray-600">info@camdeep.edu</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-2">Phone</h3>
+                    <p class="text-gray-600">+92 316 8494258<br>+92 305 6256623</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-2">Location</h3>
+                    <p class="text-gray-600">Purana Kahna, Near Superior College<br>Main Ferozepur Road, Lahore, Pakistan</p>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <h2 class="text-2xl font-bold mb-6">Send us a Message</h2>
+            <form method="post" class="space-y-4">
+                {% csrf_token %}
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                    <input type="text" name="name" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                    <input type="text" name="subject" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                    <textarea name="message" rows="4" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"></textarea>
+                </div>
+                <button type="submit" class="w-full px-6 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-blue-600 transition">
+                    Send Message
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

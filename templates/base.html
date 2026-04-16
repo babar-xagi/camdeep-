@@ -1,0 +1,152 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CAMDEEP - A Real-World Educational Framework{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}CAMDEEP - Transforming Education with Global Competencies{% endblock %}">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563EB',    // Blue
+                        secondary: '#FFFFFF',   // White
+                        accent: '#D4AF37',      // Gold
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                        poppins: ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+        .hero-section {
+            background: linear-gradient(135deg, #2563EB 0%, #1e40af 100%);
+            color: white;
+        }
+        .accent-gold {
+            color: #D4AF37;
+        }
+    </style>
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="{% url 'core:home' %}" class="text-2xl font-bold text-primary">
+                        CAMDEEP
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="{% url 'core:home' %}" class="text-gray-700 hover:text-primary transition">Home</a>
+                    <a href="{% url 'core:about' %}" class="text-gray-700 hover:text-primary transition">About</a>
+                    <a href="{% url 'skills:list' %}" class="text-gray-700 hover:text-primary transition">Skills</a>
+                    <a href="{% url 'programs:list' %}" class="text-gray-700 hover:text-primary transition">Programs</a>
+                    <a href="{% url 'schools:list' %}" class="text-gray-700 hover:text-primary transition">Schools</a>
+                    <a href="{% url 'resources:list' %}" class="text-gray-700 hover:text-primary transition">Resources</a>
+                </div>
+
+                <!-- Auth Links -->
+                <div class="flex items-center space-x-4">
+                    {% if user.is_authenticated %}
+                        <span class="text-sm text-gray-600">{{ user.get_full_name|default:user.username }}</span>
+                        <a href="{% url 'accounts:profile' %}" class="text-gray-700 hover:text-primary transition">Profile</a>
+                        <a href="{% url 'accounts:logout' %}" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded transition">Logout</a>
+                    {% else %}
+                        <a href="{% url 'accounts:login' %}" class="text-gray-700 hover:text-primary transition">Login</a>
+                        <a href="{% url 'accounts:register' %}" class="px-4 py-2 bg-primary text-white rounded hover:bg-blue-600 transition">Register</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Messages -->
+    {% if messages %}
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded mb-4">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 accent-gold">CAMDEEP</h3>
+                    <p class="text-gray-400 text-sm">Empowering minds. Transforming futures.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="{% url 'core:home' %}" class="hover:text-white transition">Home</a></li>
+                        <li><a href="{% url 'skills:list' %}" class="hover:text-white transition">Skills</a></li>
+                        <li><a href="{% url 'programs:list' %}" class="hover:text-white transition">Programs</a></li>
+                        <li><a href="{% url 'core:about' %}" class="hover:text-white transition">About</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="{% url 'resources:list' %}" class="hover:text-white transition">Downloads</a></li>
+                        <li><a href="{% url 'cms:list' %}" class="hover:text-white transition">Blog</a></li>
+                        <li><a href="{% url 'core:faq' %}" class="hover:text-white transition">FAQ</a></li>
+                        <li><a href="{% url 'core:contact' %}" class="hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Contact</h4>
+                    <p class="text-sm text-gray-400 mb-2">📞 +92 316 8494258</p>
+                    <p class="text-sm text-gray-400">📧 info@camdeep.edu</p>
+                    <p class="text-sm text-gray-400">📍 Lahore, Pakistan</p>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8">
+                <div class="flex justify-between items-center text-sm text-gray-400">
+                    <p>&copy; 2024 CAMDEEP. All rights reserved.</p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="hover:text-white transition">Privacy Policy</a>
+                        <a href="#" class="hover:text-white transition">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
+
